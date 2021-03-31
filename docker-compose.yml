@@ -1,5 +1,8 @@
 version: '3.3'
 
+volumes:
+  app-data:
+
 services:
   mysqldb:
     image: mysql:5.7
@@ -14,7 +17,27 @@ services:
     expose:
       - '3306'
     volumes:
-      - app-mysqldb:/var/lib/mysql
+      - app-data:/var/lib/mysql
 
-volumes:
-  app-mysqldb:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'user'
+      MONGO_INITDB_ROOT_PASSWORD: 'password'
+      MONGO_INITDB_DATABASE: 'mongodb'
+    ports:
+      - 27017:27017
+    volumes:
+      - app-data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3.8
+    container_name: 'rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - app-data:/var/lib/rabbitmq/
+        - app-data:/var/log/rabbitmq
+
