@@ -1,7 +1,9 @@
 version: '3.3'
 
 volumes:
-  app-data:
+  mysql-data:
+  mongodb-data:
+  rabbitmq-data:
 
 services:
   mysqldb:
@@ -17,7 +19,7 @@ services:
     expose:
       - '3306'
     volumes:
-      - app-data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
 
   mongodb:
     image: mongo:latest
@@ -29,7 +31,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - app-data:/data/db
+      - mongodb-data:/data/db
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -41,6 +43,6 @@ services:
         - 5672:5672
         - 15672:15672
     volumes:
-        - app-data:/etc/rabbitmq/
-        - app-data:/var/lib/rabbitmq/
-        - app-data:/var/log/rabbitmq/
+        - rabbitmq-data:/etc/rabbitmq/
+        - rabbitmq-data:/var/lib/rabbitmq/
+        - rabbitmq-data:/var/log/rabbitmq/

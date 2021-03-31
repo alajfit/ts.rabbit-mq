@@ -12,3 +12,13 @@ Demo of TypeScript and Rabbit MQ
 ## Interesting Articles While Building
 
 - [REST PUT Debate](https://stackoverflow.com/questions/630453/put-vs-post-in-rest)
+
+## Useful Docker Commands
+
+```sh
+# Stop all running Docker Containers
+docker container stop $(docker container list -q)
+
+# Delte all existing containers
+docker rm $(docker ps -a -q)
+```
