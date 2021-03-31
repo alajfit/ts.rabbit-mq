@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import * as cors from 'cors'
 import { createConnection } from 'typeorm'
 import { Product } from './entity/product'
+import * as amqp from 'amqplib/callback_api'
 
 const app = express()
 const PORT = 8000
@@ -18,58 +19,75 @@ const uuidv4 = () => {
 createConnection().then(db => {
     const productRepo = db.getRepository(Product)
 
-    app.use(cors({
-        origin: ['http://localhost:3000']
-    }))
+    amqp.connect('amqp://user:password@localhost:5672', (errConnecting, connection) => {
+        if (errConnecting) throw errConnecting
 
-    app.use(express.json())
+        connection.createChannel((errCreateChannel, channel) => {
+            if (errCreateChannel) throw errCreateChannel
 
-    app.get('/api/products', async (req: Request, res: Response) => {
-        const products = await productRepo.find()
-        return res.json(products)
-    })
+            app.use(cors({
+                origin: ['http://localhost:3000']
+            }))
 
-    app.get('/api/products/:id', async (req: Request, res: Response) => {
-        const product = await productRepo.findOne(req.params.id)
-        return res.send(product)
-    })
+            app.use(express.json())
 
-    app.post('/api/products', async (req: Request, res: Response) => {
-        const product = await productRepo.create(req.body)
-        const result = await productRepo.save(product)
-        return res.send(result)
-    })
+            app.get('/api/products', async (req: Request, res: Response) => {
+                const products = await productRepo.find()
+                return res.json(products)
+            })
 
-    app.post('/api/products/:count', async (req: Request, res: Response) => {
-        const totalToCreate= parseInt(req.params.count) || 1
+            app.get('/api/products/:id', async (req: Request, res: Response) => {
+                const product = await productRepo.findOne(req.params.id)
+                return res.send(product)
+            })
 
-        for (let i = 0; i < totalToCreate; i++) {
-            const product = await productRepo.create({ title: `Title: ${uuidv4()}` })
-            const result = await productRepo.save(product)
-        }
-        return res.sendStatus(200)
-    })
+            app.post('/api/products', async (req: Request, res: Response) => {
+                const product = await productRepo.create(req.body)
+                const result = await productRepo.save(product)
+                channel.sendToQueue('product_created', Buffer.from(JSON.stringify(result)))
+                return res.send(result)
+            })
 
-    app.patch('/api/products/:id', async (req: Request, res: Response) => {
-        const product = await productRepo.findOne(req.params.id)
-        productRepo.merge(product, req.body)
-        const result = await productRepo.save(product)
-        return res.send(result)
-    })
+            app.post('/api/products/:count', async (req: Request, res: Response) => {
+                const totalToCreate= parseInt(req.params.count) || 1
 
-    app.patch('/api/products/:id/like', async (req: Request, res: Response) => {
-        const product = await productRepo.findOne(req.params.id)
-        product.likes++
-        const result = await productRepo.save(product)
-        return res.send(result)
-    })
+                for (let i = 0; i < totalToCreate; i++) {
+                    const product = await productRepo.create({ title: `Title: ${uuidv4()}` })
+                    const result = await productRepo.save(product)
+                    channel.sendToQueue('product_created', Buffer.from(JSON.stringify(result)))
+                }
+                return res.sendStatus(200)
+            })
 
-    app.delete('/api/products/:id', async (req: Request, res: Response) => {
-        const result = await productRepo.delete(req.params.id)
-        return res.send(result)
-    })
+            app.patch('/api/products/:id', async (req: Request, res: Response) => {
+                const product = await productRepo.findOne(req.params.id)
+                productRepo.merge(product, req.body)
+                const result = await productRepo.save(product)
+                channel.sendToQueue('product_updated', Buffer.from(JSON.stringify(result)))
+                return res.send(result)
+            })
 
-    app.listen(PORT, () => {
-        console.log(`Server listening on: http://localhost:${PORT}`)
+            app.patch('/api/products/:id/like', async (req: Request, res: Response) => {
+                const product = await productRepo.findOne(req.params.id)
+                product.likes++
+                const result = await productRepo.save(product)
+                channel.sendToQueue('product_updated', Buffer.from(JSON.stringify(result)))
+                return res.send(result)
+            })
+
+            app.delete('/api/products/:id', async (req: Request, res: Response) => {
+                const result = await productRepo.delete(req.params.id)
+                channel.sendToQueue('product_deleted', Buffer.from(req.params.id))
+                return res.send(result)
+            })
+
+            app.listen(PORT, () => {
+                console.log(`Server listening on: http://localhost:${PORT}`)
+            })
+
+            process.on('beforeExit', () => {
+                connection.close()
+            })
+        })
     })
 })
