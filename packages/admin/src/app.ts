@@ -57,6 +57,18 @@ createConnection().then(db => {
         return res.send(result)
     })
 
+    app.patch('/api/products/:id/like', async (req: Request, res: Response) => {
+        const product = await productRepo.findOne(req.params.id)
+        product.likes++
+        const result = await productRepo.save(product)
+        return res.send(result)
+    })
+
+    app.delete('/api/products/:id', async (req: Request, res: Response) => {
+        const result = await productRepo.delete(req.params.id)
+        return res.send(result)
+    })
+
     app.listen(PORT, () => {
         console.log(`Server listening on: http://localhost:${PORT}`)
     })
