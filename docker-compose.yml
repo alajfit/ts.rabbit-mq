@@ -5,17 +5,23 @@ volumes:
   mongodb-data:
   rabbitmq-data:
 
+networks:
+  app-network:
+    driver: bridge
+
 services:
 
-#  admin:
-#    build: ./packages/admin
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - rabbitmq
-#    links:
-#      - mysqldb
-#      - rabbitmq
+  admin:
+    build: ./packages/admin
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+    links:
+      - mysqldb
+      - rabbitmq
+    networks:
+      - app-network
 
   mysqldb:
     image: mysql:5.7
@@ -31,6 +37,8 @@ services:
       - '3306'
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
 
   mongodb:
     image: mongo:latest
@@ -43,6 +51,8 @@ services:
       - 27017:27017
     volumes:
       - mongodb-data:/data/db
+    networks:
+      - app-network
 
   rabbitmq:
     image: rabbitmq:3-management-alpine
@@ -57,3 +67,5 @@ services:
         - rabbitmq-data:/etc/rabbitmq/
         - rabbitmq-data:/var/lib/rabbitmq/
         - rabbitmq-data:/var/log/rabbitmq/
+    networks:
+      - app-network

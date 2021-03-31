@@ -30,8 +30,9 @@ createConnection({
     synchronize: true
 }).then(db => {
     const productRepo = db.getRepository(Product)
+    const rabbitMQUrl = `amqp://user:password@${process.env.NODE_ENV === 'development' ? 'localhost' : 'rabbitmq'}:5672`
 
-    amqp.connect('amqp://user:password@localhost:5672', (errConnecting, connection) => {
+    amqp.connect(rabbitMQUrl, (errConnecting, connection) => {
         if (errConnecting) throw errConnecting
 
         connection.createChannel((errCreateChannel, channel) => {
