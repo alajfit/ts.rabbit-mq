@@ -32,12 +32,15 @@ services:
       - app-data:/data/db
 
   rabbitmq:
-    image: rabbitmq:3.8
-    container_name: 'rabbitmq'
+    image: rabbitmq:3-management-alpine
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: 'user'
+      RABBITMQ_DEFAULT_PASS: 'password'
     ports:
         - 5672:5672
         - 15672:15672
     volumes:
+        - app-data:/etc/rabbitmq/
         - app-data:/var/lib/rabbitmq/
-        - app-data:/var/log/rabbitmq
-
+        - app-data:/var/log/rabbitmq/
