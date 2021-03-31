@@ -6,6 +6,17 @@ volumes:
   rabbitmq-data:
 
 services:
+
+#  admin:
+#    build: ./packages/admin
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - rabbitmq
+#    links:
+#      - mysqldb
+#      - rabbitmq
+
   mysqldb:
     image: mysql:5.7
     restart: always
