@@ -29,6 +29,11 @@ createConnection().then(db => {
         return res.json(products)
     })
 
+    app.get('/api/products/:id', async (req: Request, res: Response) => {
+        const product = await productRepo.findOne(req.params.id)
+        return res.send(product)
+    })
+
     app.post('/api/products', async (req: Request, res: Response) => {
         const product = await productRepo.create(req.body)
         const result = await productRepo.save(product)
@@ -43,6 +48,13 @@ createConnection().then(db => {
             const result = await productRepo.save(product)
         }
         return res.sendStatus(200)
+    })
+
+    app.patch('/api/products/:id', async (req: Request, res: Response) => {
+        const product = await productRepo.findOne(req.params.id)
+        productRepo.merge(product, req.body)
+        const result = await productRepo.save(product)
+        return res.send(result)
     })
 
     app.listen(PORT, () => {
