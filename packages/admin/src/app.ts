@@ -16,7 +16,19 @@ const uuidv4 = () => {
     });
 }
 
-createConnection().then(db => {
+createConnection({
+    type: 'mysql',
+    host: process.env.NODE_ENV === 'development' ? 'localhost' : 'mysqldb',
+    port: 3306,
+    username: 'user',
+    password: 'password',
+    database: 'mysqldb',
+    entities: [
+        'dist/entity/*.js'
+    ],
+    logging: true,
+    synchronize: true
+}).then(db => {
     const productRepo = db.getRepository(Product)
 
     amqp.connect('amqp://user:password@localhost:5672', (errConnecting, connection) => {
