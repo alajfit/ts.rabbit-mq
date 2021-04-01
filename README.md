@@ -23,8 +23,14 @@ Demo of TypeScript and Rabbit MQ
 # Stop all running Docker Containers
 docker container stop $(docker container list -q)
 
+# Delete all images
+docker rmi -f $(docker images -a -q)
+
 # Delte all existing containers
 docker rm $(docker ps -a -q)
+
+# Bring up Docker Compose and Rebuild
+docker-compose up --force-recreate
 ```
 
 ## Future Aims

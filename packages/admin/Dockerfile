@@ -1,11 +1,13 @@
-FROM node:14-alpine as base
+FROM node:14-alpine
 
-WORKDIR /usr/src/app
+RUN apk update && apk add bash
 
-COPY . .
+WORKDIR /app
+COPY package.json /app
 
-RUN npm install
-RUN npm build
+RUN yarn install
+
+COPY . /app
 
 EXPOSE 8000
-CMD ["node", "."]
+CMD ["./wait-for-it.sh" , "rabbitmq:5672" , "--strict" , "--timeout=300" , "--" , "npm", "run", "dev"]
