@@ -6,7 +6,7 @@ export class Product {
     id: string
 
     @Column({ unique: true })
-    admin_id: number
+    adminId: number
 
     @Column()
     title: string
