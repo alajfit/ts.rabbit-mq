@@ -1,6 +1,10 @@
 # ts.rabbit-mq
 Demo of TypeScript and Rabbit MQ
 
+## Architecture
+
+![arch](./docs/arch.png)
+
 ## Resources
 
 - [Express JS](https://expressjs.com/)
@@ -22,3 +26,10 @@ docker container stop $(docker container list -q)
 # Delte all existing containers
 docker rm $(docker ps -a -q)
 ```
+
+## Future Aims
+- Idempotent
+- Replayable
+- Rollback
+- Single write per Queue consumer
+- DAG of Data Flow
