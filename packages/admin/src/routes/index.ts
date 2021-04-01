@@ -18,7 +18,7 @@ export const routes = (productRepo: Repository<Product>, channel: Channel) => {
     })
 
     router.post('/api/products', async (req: Request, res: Response) => {
-        const product = productRepo.create(req.body)
+        const product = await productRepo.create(req.body || { title: `Title: ${uuidv4()}` })
         const result = await productRepo.save(product)
         channel.sendToQueue('product_created', Buffer.from(JSON.stringify(result)))
         return res.send(result)
@@ -28,7 +28,7 @@ export const routes = (productRepo: Repository<Product>, channel: Channel) => {
         const totalToCreate= parseInt(req.params.count) || 1
 
         for (let i = 0; i < totalToCreate; i++) {
-            const product = productRepo.create({ title: `Title: ${uuidv4()}` })
+            const product = await productRepo.create({ title: `Title: ${uuidv4()}` })
             const result = await productRepo.save(product)
             channel.sendToQueue('product_created', Buffer.from(JSON.stringify(result)))
         }
