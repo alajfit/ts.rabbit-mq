@@ -5,8 +5,28 @@ Demo of TypeScript and Rabbit MQ
 
 ![arch](./docs/arch.png)
 
+## Run the application
+
+### Prerequisites
+
+- Docker Installed
+
+### Start Application
+
+```sh
+# Bring up Docker Compose and Rebuild
+docker-compose up --force-recreate
+```
+
+### Available Dashboards
+
+- [Admin Swagger](http://localhost:8000/swagger/#/)
+- [RabbitQA Dashboard](http://localhost:15672/#/)
+
+
 ## Resources
 
+### Tools and Frameworks
 - [Express JS](https://expressjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TYPE ORM](https://typeorm.io/#/)
@@ -15,8 +35,7 @@ Demo of TypeScript and Rabbit MQ
 - [Swagger JS Docs](https://github.com/Surnet/swagger-jsdoc/blob/v7/docs/FIRST-STEPS.md)
 - [Swagger OPEN Api 3](https://swagger.io/docs/specification/describing-request-body/)
 
-## Interesting Articles While Building
-
+### Interesting Articles While Building
 - [REST PUT Debate](https://stackoverflow.com/questions/630453/put-vs-post-in-rest)
 
 ## Useful Docker Commands
