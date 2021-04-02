@@ -1,11 +1,11 @@
 {
   "name": "admin",
   "version": "1.0.0",
-  "main": "dist/app.js",
+  "main": "dist/src/app.js",
   "license": "MIT",
   "scripts": {
     "lint": "tslint -c tslint.json -p tsconfig.json",
-    "dev": "node .",
+    "dev": "node . | pino-pretty",
     "tsc": "tsc",
     "clean": "rimraf dist/*",
     "build": "npm-run-all clean lint tsc",
@@ -19,7 +19,10 @@
     "express-pino-logger": "^6.0.0",
     "mysql": "^2.18.1",
     "pino": "^6.11.2",
+    "pino-pretty": "^4.7.1",
     "reflect-metadata": "^0.1.13",
+    "swagger-jsdoc": "6.0.0",
+    "swagger-ui-express": "^4.1.6",
     "typeorm": "^0.2.32"
   },
   "devDependencies": {
