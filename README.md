@@ -1,5 +1,9 @@
-# ts.rabbit-mq
-Demo of TypeScript and Rabbit MQ
+# TypeScipt TypeORM Express Rabbit MQ 
+> Example of Running System
+
+## Tech Used
+
+![arch](./docs/tech.png)
 
 ## Architecture
 
@@ -18,7 +22,7 @@ Demo of TypeScript and Rabbit MQ
 docker-compose up --force-recreate
 ```
 
-### Available Dashboards
+### Available Dashboards when Docker Compose is fully Up
 
 - [Admin Swagger](http://localhost:8000/swagger/#/)
 - [RabbitQA Dashboard](http://localhost:15672/#/)
