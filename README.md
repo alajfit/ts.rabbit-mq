@@ -26,6 +26,7 @@ docker-compose up --force-recreate
 
 - [Admin Swagger](http://localhost:8000/swagger/#/)
 - [RabbitQA Dashboard](http://localhost:15672/#/)
+- [Mongo Express](http://localhost:8888/)
 
 
 ## Resources
