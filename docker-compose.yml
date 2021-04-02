@@ -11,21 +11,21 @@ networks:
 
 services:
 
-#  admin:
-#    container_name: admin
-#    build: ./packages/admin
-#    environment:
-#      - NODE_ENV=production
-#    ports:
-#      - "8000:8000"
-#    depends_on:
-#      - rabbitmq
-#      - mysqldb
-#    links:
-#      - rabbitmq
-#      - mysqldb
-#    networks:
-#      - app_network
+  admin:
+    container_name: admin
+    build: ./packages/admin
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+      - mysqldb
+    links:
+      - rabbitmq
+      - mysqldb
+    networks:
+      - app_network
 
   mysqldb:
     container_name: mysqldb
