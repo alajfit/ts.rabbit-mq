@@ -14,6 +14,7 @@ const expressLogger = expressPino({ logger });
 
 app.use(expressLogger)
 app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:8000'] }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 swaggerSetup(app)
 

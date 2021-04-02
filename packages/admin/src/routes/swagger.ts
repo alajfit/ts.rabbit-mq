@@ -47,4 +47,24 @@ export function swaggerSetup(app: Express) {
      *          type: string
      *          minimum: 1
      */
+
+    /**
+     *  @swagger
+     *  definitions:
+     *      Count:
+     *          type: number
+     *          minimum: 1
+     */
+
+    /**
+     *  @swagger
+     *  definitions:
+     *      NewProduct:
+     *          type: object
+     *          required:
+     *              - title
+     *          properties:
+     *              title:
+     *                  type: string
+     */
 }

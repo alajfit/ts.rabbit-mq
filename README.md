@@ -12,6 +12,8 @@ Demo of TypeScript and Rabbit MQ
 - [TYPE ORM](https://typeorm.io/#/)
 - [Rabbit MQ](https://www.rabbitmq.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
+- [Swagger JS Docs](https://github.com/Surnet/swagger-jsdoc/blob/v7/docs/FIRST-STEPS.md)
+- [Swagger OPEN Api 3](https://swagger.io/docs/specification/describing-request-body/)
 
 ## Interesting Articles While Building
 
