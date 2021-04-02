@@ -27,6 +27,7 @@ docker-compose up --force-recreate
 ## Resources
 
 ### Tools and Frameworks
+
 - [Express JS](https://expressjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [TYPE ORM](https://typeorm.io/#/)
@@ -36,6 +37,7 @@ docker-compose up --force-recreate
 - [Swagger OPEN Api 3](https://swagger.io/docs/specification/describing-request-body/)
 
 ### Interesting Articles While Building
+
 - [REST PUT Debate](https://stackoverflow.com/questions/630453/put-vs-post-in-rest)
 
 ## Useful Docker Commands
