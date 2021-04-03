@@ -68,3 +68,4 @@ docker-compose up --force-recreate
 - Rollback
 - Single write per Queue consumer
 - DAG of Data Flow
+- Socket updates for Rabbit MQ messages to website
