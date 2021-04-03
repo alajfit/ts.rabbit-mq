@@ -32,10 +32,10 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'mysqldb'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      - MYSQL_DATABASE=mysqldb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
     ports:
       - '3306:3306'
     expose:
@@ -52,7 +52,7 @@ services:
     ports:
       - '5000:80'
     environment:
-      PMA_HOST: mysqldb
+      - PMA_HOST=mysqldb
     depends_on:
       - mysqldb
     networks:
@@ -63,9 +63,9 @@ services:
     image: mongo:latest
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: 'user'
-      MONGO_INITDB_ROOT_PASSWORD: 'password'
-      MONGO_INITDB_DATABASE: 'mongodb'
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=mongodb
     ports:
       - 27017:27017
     volumes:
@@ -77,16 +77,12 @@ services:
     container_name: mongoex
     image: mongo-express
     environment:
-        - ME_CONFIG_MONGODB_SERVER=mongodb
-        - ME_CONFIG_MONGODB_PORT=27017
-        - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-        - ME_CONFIG_MONGODB_AUTH_DATABASE=mongodb
-        - ME_CONFIG_MONGODB_AUTH_USERNAME=user
-        - ME_CONFIG_MONGODB_AUTH_PASSWORD=password
-        - ME_CONFIG_BASICAUTH_USERNAME=user
-        - ME_CONFIG_BASICAUTH_PASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=user
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
     depends_on:
-        - mongodb
+      - mongodb
     ports:
       - "8888:8081"
     networks:
@@ -97,8 +93,8 @@ services:
     image: rabbitmq:3-management-alpine
     restart: always
     environment:
-      RABBITMQ_DEFAULT_USER: 'user'
-      RABBITMQ_DEFAULT_PASS: 'password'
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
     ports:
         - 5672:5672
         - 15672:15672
