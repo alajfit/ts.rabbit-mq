@@ -10,4 +10,4 @@ RUN yarn install
 COPY . /app
 
 EXPOSE 8000
-CMD ["./wait-for-it.sh" , "rabbitmq:5672" , "--strict" , "--timeout=300" , "--" , "npm", "start"]
+CMD ["./wait-for-it.sh" , "rabbitmq:5672" , "--strict" , "--timeout=300" , "--" , "node", "server.js"]
