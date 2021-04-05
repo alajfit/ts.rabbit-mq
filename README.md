@@ -1,5 +1,5 @@
 # TypeScipt TypeORM Express Rabbit MQ 
-> Example of Running System
+> Full Product Catalog Setup
 
 ## Tech Used
 
