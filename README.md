@@ -69,3 +69,4 @@ docker-compose up --force-recreate
 - Single write per Queue consumer
 - DAG of Data Flow
 - Socket updates for Rabbit MQ messages to website
+- Replay all rows from source on request to rebuild consumer db
